@@ -1,6 +1,6 @@
 {
-  "name": "sequlpagination",
-  "version": "1.0.0",
+  "name": "sequelize-pagination",
+  "version": "1.0.1",
   "description": "A reusable pagination utility for Sequelize.",
   "main": "src/index.js",
   "scripts": {
