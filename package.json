@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/roshangautam07/sequl-pagination.git"
+    "url": "git://github.com/roshangautam07/sequelizepagination.git"
   },
   "dependencies": {
     "sequelize": "^6.0.0",
