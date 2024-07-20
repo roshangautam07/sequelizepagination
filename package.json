@@ -1,5 +1,5 @@
 {
-  "name": "sequelizepagination",
+  "name": "sequelize-pagination-offset",
   "version": "1.0.0",
   "description": "A reusable pagination utility for Sequelize.",
   "main": "src/index.js",
