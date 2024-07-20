@@ -1,0 +1,27 @@
+{
+  "name": "sequlpagination",
+  "version": "1.0.0",
+  "description": "A reusable pagination utility for Sequelize.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "sequelize",
+    "pagination",
+    "offset pagination"
+  ],
+  "author": "Roshan Gautam",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/roshangautam07/sequl-pagination.git"
+  },
+  "dependencies": {
+    "sequelize": "^6.0.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
