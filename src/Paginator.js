@@ -1,3 +1,5 @@
+const {isNestedArrayWithOrder, isArrayofObjects} = require("./utils/utils");
+
 class Paginator {
     constructor(model) {
         this.model = model;
@@ -25,34 +27,55 @@ class Paginator {
     }
 
     setPage(pageNumber) {
+        if(typeof pageNumber != 'number'){
+            throw new TypeError('page number must be integer number')
+        }
         this.page = pageNumber ? pageNumber : this.page;
         return this;
     }
 
     setSize(pageSize) {
+        if(typeof pageSize != 'number'){
+            throw new TypeError('pageSize number must be integer number')
+        }
         this.size = pageSize ? pageSize : this.size;
         return this;
     }
 
     setOrderBy(order) {
+        if(!isNestedArrayWithOrder(order)){
+            throw new TypeError('order number must be array')
+        }
         this.orderBy = order;
         return this;
     }
 
     setCondition(cond) {
+        if(typeof cond != 'object'){
+            throw new TypeError('condition  must be object type')
+        }
         this.condition = cond;
         return this;
     }
 
     setAttributes(attrs) {
+        if(!Array.isArray(attrs)){
+            throw new TypeError('Attribute must be array type')
+        }
         this.attributes = attrs;
         return this;
     }
     setAssociations(assocs) {
+        if(!isArrayofObjects(assocs)){
+            throw new TypeError('Assocosiation must be array of an object')
+        }
         this.associations = assocs;
         return this;
     }
     setDataTransformFn(transformFn) {
+        if(typeof transformFn !='function'){
+            throw new TypeError('Transformer must be function')
+        }
         this.dataTransformFn = transformFn;
         return this;
     }

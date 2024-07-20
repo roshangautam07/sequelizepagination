@@ -1,5 +1,5 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
-const {SequlPagination} = require('../index');
+const { SequlPagination } = require('../index');
 const expectedTestModelsCounts = {
     1: 6,
     2: 4,
@@ -53,8 +53,8 @@ describe('Paginator', () => {
 
         await sequelize.sync({ force: true });
         const relData = [
-            { id: 1, test: 'Test 1' },
-            { id: 2, test: 'Test 2' },
+            { id: 1, test: 'Test 10' },
+            { id: 2, test: 'Test 10' },
             { id: 3, test: 'Test 3' },
             { id: 4, test: 'Test 4' },
             { id: 5, test: 'Test 5' },
@@ -87,7 +87,7 @@ describe('Paginator', () => {
 
     test('getPagination returns correct limit and offset', () => {
         const paginator = new SequlPagination(TestModel);
-        paginator.setPage(2).setSize(5);
+        paginator.setPage(2).setSize(Number(5));
 
         const pagination = paginator.getPagination();
         expect(pagination.limit).toBe(5);
@@ -137,11 +137,23 @@ describe('Paginator', () => {
 
     test('execute applies order correctly', async () => {
         const paginator = new SequlPagination(TestModel);
-        paginator.setOrderBy([['name', 'DESC']]);
+        paginator.setOrderBy([['name', 'DESC'], ['id']]);
 
         const result = await paginator.execute();
 
         expect(result.rows[0].name).toBe('Test 9');
+    });
+    test('Should  throw type error', async () => {
+        try {
+            const paginator = new SequlPagination(TestModel);
+            paginator.setOrderBy(['name', 'DESC']);
+
+            const result = await paginator.execute();
+            expect(result).toThrow(TypeError);
+        } catch (error) {
+
+        }
+
     });
     test('execute applies associations expectedTestModelsCounts', async () => {
         const paginator = new SequlPagination(RelatedModel);
@@ -168,5 +180,25 @@ describe('Paginator', () => {
         const result = await paginator.execute();
         expect(result.rows[0]).toHaveProperty('transformed', true);
     });
+    test('All condition covered', async () => {
+        const paginator = await new SequlPagination(RelatedModel)
+            .setPage(1)
+            .setSize(10)
+            .setCondition({ test: 'Test 10' })
+            .setAttributes(['id', 'test'])
+            .setAssociations(
+                [{
+                    model: TestModel,
+                    aattributes: ['name']
+                }]
+            )
+            .setOrderBy([['id']])
+            .setDataTransformFn((data) => {
+                data.rows = data.rows.map(row => ({ ...row.dataValues, transformed: true }));
+                return data;
+            })
+            .execute();
+            
+    })
 
 });
